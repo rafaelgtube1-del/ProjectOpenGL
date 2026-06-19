@@ -1,11 +1,11 @@
 #include "mesh.hpp"
 
-Mesh::Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, const std::vector<float> &colors, bool transparent)
-    : verticeVBO(vertices.data(), vertices.size() * sizeof(float)),
-    colorVBO(colors.data(), colors.size() * sizeof(float)),
-    indiceEBO(indices.data(), indices.size() * sizeof(unsigned int)),
+Mesh::Mesh(const MeshData &data, bool transparent)
+    : verticeVBO(data.vertices.data(), data.vertices.size() * sizeof(float)),
+    colorVBO(data.colors.data(), data.colors.size() * sizeof(float)),
+    indiceEBO(data.indices.data(), data.indices.size() * sizeof(unsigned int)),
     transparent(transparent),
-    indexCount(indices.size())
+    indexCount(data.indices.size())
 {
     vao.linkVBO(verticeVBO, 3, 0);
     vao.linkVBO(colorVBO, 4, 1);

@@ -7,16 +7,21 @@
 
 #include <mesh.hpp>
 
+struct Transform
+{
+    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+    glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
+};
+
 class Object
 {
 public:
-    glm::vec3 position;
-    glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-    glm::vec3 scale;
+    Transform transform; 
 
     Mesh* mesh;
 
-    Object(glm::vec3 position, glm::quat rotation, glm::vec3 scale, Mesh& mesh);
+    Object(Transform &transform, Mesh& mesh);
 
     glm::mat4 getModelMatrix() const;
     

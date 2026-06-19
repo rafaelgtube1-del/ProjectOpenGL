@@ -8,14 +8,17 @@
 #include <window.hpp>
 #include <camera.hpp>
 #include <input.hpp>
-#include <defaultShader.hpp>
+
 #include <vao.hpp>
 #include <vbo.hpp>
 #include <ebo.hpp>
 
+#include <defaultShader.hpp>
+
 #include <mesh.hpp>
 #include <object.hpp>
 #include <renderer.hpp>
+#include <shapes.hpp>
 
 int width = 900;
 int height = 600;
@@ -36,29 +39,13 @@ int main() {
 
     //glEnable(GL_CULL_FACE);
 
-    std::vector<float> vertices = {
-        -0.5f, -0.5f, 0.0f,
-        -0.5f, +0.5f, 0.0f,
-        +0.5f, +0.5f, 0.0f,
-        +0.5f, -0.5f, 0.0f,
-    };
+    MeshData cube = Shapes::getCubeMesh();
+    Transform transform;
 
-    std::vector<unsigned int> indices = {
-        0, 1, 2,
-        0, 2, 3,
-    };
+    Mesh mesh(cube, false);
+    Object object(transform, mesh);
 
-    std::vector<float> colors1 = {
-        1.0f, 0.0f, 0.0f, 1.0f,
-        0.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 1.0f, 1.0f,
-    };
-
-    Mesh mesh1(vertices, indices, colors1, false);
-    Object object1(glm::vec3(0.0f, 0.0f, -4.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), mesh1);
-
-    renderer.addObject(object1);
+    renderer.addObject(object);
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;

@@ -9,6 +9,13 @@
 #include <vbo.hpp>
 #include <ebo.hpp>
 
+struct MeshData
+{
+    std::vector<float> vertices = {};
+    std::vector<unsigned int> indices = {};
+    std::vector<float> colors = {};
+};
+
 class Mesh
 {
 private:
@@ -22,7 +29,7 @@ private:
 public:
     bool transparent = false;
     
-    Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, const std::vector<float> &colors, bool transparent);
+    Mesh(const MeshData &data, bool transparent);
 
     void draw();
     void destroy();
