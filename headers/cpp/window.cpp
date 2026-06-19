@@ -45,7 +45,7 @@ void Window::update()
 }
 
 void Window::destroy()
-{
+{    
     glfwDestroyWindow(window);
     glfwTerminate();
 
