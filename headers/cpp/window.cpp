@@ -34,6 +34,8 @@ int Window::create()
 
 void Window::clear()
 {
+    glfwPollEvents();
+
     glClearColor(0.7f, 0.7f, 0.7f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
@@ -41,7 +43,6 @@ void Window::clear()
 void Window::update()
 {
     glfwSwapBuffers(window);
-    glfwPollEvents();
 }
 
 void Window::destroy()

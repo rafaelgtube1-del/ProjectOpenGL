@@ -2,12 +2,16 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 #include <iostream>
 #include <vector>
 
 #include <window.hpp>
 #include <camera.hpp>
 #include <input.hpp>
+#include <interface.hpp>
 
 #include <vao.hpp>
 #include <vbo.hpp>
@@ -30,14 +34,15 @@ bool firstMouse = true;
 bool mouseLocked = false;
 
 Window windowManager(width, height, title);
+Interface interface;
 Camera camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f);
+
+DefaultShader defaultShader;
 Renderer renderer;
 
 int main() {
     windowManager.create();
-    DefaultShader defaultShader;
-
-    //glEnable(GL_CULL_FACE);
+    interface.create(windowManager.getWindow());
 
     MeshData cube = Shapes::getCubeMesh();
     Transform transform;
@@ -91,6 +96,7 @@ int main() {
         Input::update();
 
         windowManager.clear();
+        interface.clear();
         defaultShader.use();
 
         if (Input::getKey(GLFW_KEY_W))
@@ -109,10 +115,12 @@ int main() {
 
         renderer.render(defaultShader, camera);
 
+        interface.update();
         windowManager.update();
     }
 
     windowManager.destroy();
+    interface.destroy();
     defaultShader.destroy();
     renderer.destroy();
 
