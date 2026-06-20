@@ -2,13 +2,15 @@
 
 Mesh::Mesh(const MeshData &data, bool transparent)
     : verticeVBO(data.vertices.data(), data.vertices.size() * sizeof(float)),
-    colorVBO(data.colors.data(), data.colors.size() * sizeof(float)),
+    texCoordVBO(data.texCoords.data(), data.texCoords.size() * sizeof(float)),
+    layerIdVBO(data.layerIds.data(), data.layerIds.size() * sizeof(unsigned int)),
     indiceEBO(data.indices.data(), data.indices.size() * sizeof(unsigned int)),
     transparent(transparent),
     indexCount(data.indices.size())
 {
     vao.linkVBO(verticeVBO, 3, 0);
-    vao.linkVBO(colorVBO, 4, 1);
+    vao.linkVBO(texCoordVBO, 2, 1);
+    vao.linkVBO(layerIdVBO, 1, 2);
     vao.linkEBO(indiceEBO);
 }
 
@@ -23,6 +25,7 @@ void Mesh::destroy()
 {
     vao.destroy();
     verticeVBO.destroy();
-    colorVBO.destroy();
+    texCoordVBO.destroy();
+    layerIdVBO.destroy();
     indiceEBO.destroy();
 }
