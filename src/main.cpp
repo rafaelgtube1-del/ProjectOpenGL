@@ -18,6 +18,7 @@
 #include <ebo.hpp>
 
 #include <defaultShader.hpp>
+#include <texture.hpp>
 
 #include <mesh.hpp>
 #include <object.hpp>
@@ -28,6 +29,12 @@ int width = 900;
 int height = 600;
 std::string title = "Mirox";
 
+std::vector<std::string> texturePaths = {
+    "resource/texture/grass.png",
+    "resource/texture/dirt.png",
+    "resource/texture/stone.png",
+};
+
 Window windowManager(width, height, title);
 Interface interface;
 Camera camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f);
@@ -37,15 +44,26 @@ int main() {
     windowManager.create();
     interface.create(windowManager.getWindow());
 
+    Texture texture(texturePaths, 8, 8);
     DefaultShader defaultShader;
 
-    MeshData cube = Shapes::getCubeMesh();
-    Transform transform;
+    for (int x = 0; x < 16; x++)
+    {
+        for (int z = 0; z < 16; z++)
+        {
+            for (int y = 0; y <= 6; y++)
+            {
+                MeshData cube = Shapes::getCubeMesh(1);
+                Transform transform;
+                transform.position = glm::vec3(x, y, z);
 
-    Mesh mesh(cube, false);
-    Object object(transform, mesh);
+                Mesh mesh(cube, false);
+                Object object(transform, mesh);
 
-    renderer.addObject(object);
+                renderer.addObject(object);
+            }
+        }
+    }
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
@@ -56,12 +74,12 @@ int main() {
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        Input::update();
-
         windowManager.clear();
         interface.clear();
         defaultShader.use();
+        texture.uniform(0, defaultShader.getId());
 
+        Input::update();
         camera.update(deltaTime);
 
         renderer.render(defaultShader, camera);
@@ -73,6 +91,7 @@ int main() {
     windowManager.destroy();
     interface.destroy();
     defaultShader.destroy();
+    texture.destroy();
     renderer.destroy();
 
     return 0;

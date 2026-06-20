@@ -6,36 +6,63 @@
 #include <mesh.hpp>
 
 namespace Cube {
-    inline constexpr std::array<float, 24> vertices = {
-        0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f, // 0, 1
-        1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, // 2, 3
-
-        0.0f, 0.0f, 1.0f,  1.0f, 0.0f, 1.0f, // 4, 5
-        1.0f, 1.0f, 1.0f,  0.0f, 1.0f, 1.0f, // 6, 7
+    inline constexpr std::array<float, 72> vertices = {
+        // front
+        0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f,
+        // back
+        0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 1.0f,  1.0f, 1.0f, 1.0f,  1.0f, 0.0f, 1.0f,
+        // left
+        0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 1.0f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f, 0.0f,
+        // right
+        1.0f, 0.0f, 0.0f,  1.0f, 1.0f, 0.0f,  1.0f, 1.0f, 1.0f,  1.0f, 0.0f, 1.0f,
+        // top
+        0.0f, 1.0f, 0.0f,  1.0f, 1.0f, 0.0f,  1.0f, 1.0f, 1.0f,  0.0f, 1.0f, 1.0f,
+        // bottom
+        0.0f, 0.0f, 1.0f,  1.0f, 0.0f, 1.0f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f, 0.0f
     };
 
     inline constexpr std::array<unsigned int, 36> indices = {
-        0, 1, 2,  0, 2, 3, // front
-        4, 7, 6,  4, 6, 5, // back
-        0, 3, 7,  0, 7, 4, // left
-        5, 6, 2,  5, 2, 1, // right
-        7, 3, 2,  7, 2, 6, // top
-        0, 4, 5,  0, 5, 1, // bottom
+        0,  2,  1,   0,  3,  2,  // front
+        4,  6,  5,   4,  7,  6,  // back
+        8,  9, 10,   8,  10, 11, // left
+        12, 13, 14,  12, 14, 15, // right
+        16, 18, 17,  16, 19, 18, // top
+        20, 22, 21,  20, 23, 22  // bottom
     };
 
-    inline constexpr std::array<float, 24> colors = {
-        1.0f, 1.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 1.0f, 1.0f,
-        0.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 0.0f, 1.0f,
+    inline constexpr std::array<float, 48> texCoords = {
+        // front (Vértices caminham na ordem: inf-esq, inf-dir, sup-dir, sup-esq)
+        0.0f, 0.0f,  0.0f, 1.0f,  1.0f, 1.0f,  1.0f, 0.0f,
+
+        // back (Vértices caminham na ordem: inf-esq, sup-esq, sup-dir, inf-dir)
+        0.0f, 0.0f,  0.0f, 1.0f,  1.0f, 1.0f,  1.0f, 0.0f,
+
+        // left (Vértices caminham na ordem: inf-dir, sup-dir, sup-esq, inf-esq)
+        1.0f, 0.0f,  1.0f, 1.0f,  0.0f, 1.0f,  0.0f, 0.0f,
+
+        // right (Vértices caminham na ordem: inf-esq, sup-esq, sup-dir, inf-dir)
+        0.0f, 0.0f,  0.0f, 1.0f,  1.0f, 1.0f,  1.0f, 0.0f,
+
+        // top (Vértices caminham na ordem: inf-esq, inf-dir, sup-dir, sup-esq)
+        0.0f, 1.0f,  1.0f, 1.0f,  1.0f, 0.0f,  0.0f, 0.0f,
+
+        // bottom (Vértices caminham na ordem: sup-esq, sup-dir, inf-dir, inf-esq)
+        0.0f, 1.0f,  1.0f, 1.0f,  1.0f, 0.0f,  0.0f, 0.0f
+    };
+
+    inline constexpr std::array<float, 24> layerIds = {
+        0.0f, 0.0f, 0.0f, 0.0f, // front
+        0.0f, 0.0f, 0.0f, 0.0f, // back
+        0.0f, 0.0f, 0.0f, 0.0f, // left
+        0.0f, 0.0f, 0.0f, 0.0f, // right
+        0.0f, 0.0f, 0.0f, 0.0f, // top
+        0.0f, 0.0f, 0.0f, 0.0f  // bottom
     };
 }
 
 class Shapes
 {
 public:
-    static MeshData getCubeMesh();
+    static MeshData getCubeMesh(int id);
     
 };

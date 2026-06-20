@@ -13,7 +13,8 @@ struct MeshData
 {
     std::vector<float> vertices = {};
     std::vector<unsigned int> indices = {};
-    std::vector<float> colors = {};
+    std::vector<float> texCoords = {};
+    std::vector<float> layerIds = {};
 };
 
 class Mesh
@@ -21,7 +22,8 @@ class Mesh
 private:
     VAO vao;
     VBO verticeVBO;
-    VBO colorVBO;
+    VBO texCoordVBO;
+    VBO layerIdVBO;
     EBO indiceEBO;
 
     unsigned int indexCount = 0;
