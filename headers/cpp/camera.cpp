@@ -53,6 +53,60 @@ void Camera::processRotate(float xOffset, float yOffset)
     updateVectors();
 }
 
+void Camera::updateMouse()
+{
+    if (!mouseLocked) { return; }
+
+    float xPos, yPos;
+    Input::getMousePos(&xPos, &yPos);
+
+    if (firstMouse)
+    {
+        lastMouseX = xPos;
+        lastMouseY = yPos;
+        firstMouse = false;
+    }
+
+    float xOffset = xPos - lastMouseX;
+    float yOffset = lastMouseY - yPos;
+
+    lastMouseX = xPos;
+    lastMouseY = yPos;
+
+    processRotate(xOffset, yOffset);
+}
+
+void Camera::update(float deltaTime)
+{
+    if (Input::getKey(GLFW_KEY_W))
+    { processMoviment(glm::vec3(0.0f, 0.0f, -1.0f), deltaTime); }
+    if (Input::getKey(GLFW_KEY_S))
+    { processMoviment(glm::vec3(0.0f, 0.0f, 1.0f), deltaTime); }
+    if (Input::getKey(GLFW_KEY_A))
+    { processMoviment(glm::vec3(-1.0f, 0.0f, 0.0f), deltaTime); }
+    if (Input::getKey(GLFW_KEY_D))
+    { processMoviment(glm::vec3(1.0f, 0.0f, 0.0f), deltaTime); }
+
+    if (Input::getKey(GLFW_KEY_E))
+    { processMoviment(glm::vec3(0.0f, 1.0f, 0.0f), deltaTime); }
+    if (Input::getKey(GLFW_KEY_Q))
+    { processMoviment(glm::vec3(0.0f, -1.0f, 0.0f), deltaTime); }
+
+    if (Input::getKey(GLFW_KEY_LEFT_SHIFT))
+    {
+        glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        mouseLocked = false;
+    }
+    if (Input::getKey(GLFW_KEY_LEFT_CONTROL))
+    {
+        glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        mouseLocked = true;
+        firstMouse = true;
+    }
+
+    updateMouse();
+}
+
 void Camera::setScreenSize(float width, float height)
 {
     this->width = width;

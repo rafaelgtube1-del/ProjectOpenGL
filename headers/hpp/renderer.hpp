@@ -1,3 +1,5 @@
+#define GLFW_INCLUDE_NONE
+
 #pragma once
 
 #include <iostream>

@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <input.hpp>
+
 class Camera
 {
 private:
@@ -22,6 +24,12 @@ private:
     float width = 900;
     float height = 600;
 
+    float lastMouseX = width / 2.0f;
+    float lastMouseY = height / 2.0f;
+    bool firstMouse = true;
+    bool mouseLocked = false;
+
+    void updateMouse();
     void updateVectors();
 
 public:
@@ -29,9 +37,11 @@ public:
 
     glm::mat4 getViewMatrix() const;
     glm::mat4 getProjectionMatrix() const;
-
+    
     void processMoviment(glm::vec3 direction, float deltaTime);
     void processRotate(float xOffset, float yOffset);
+
+    void update(float deltaTime);
 
     void setScreenSize(float width, float height);
     

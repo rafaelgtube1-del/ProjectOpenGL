@@ -6,6 +6,16 @@ Object::Object(Transform &transform, Mesh& mesh)
     this->mesh = &mesh;
 }
 
+void Object::setTransform(Transform &transform)
+{
+    this->transform = transform;
+}
+
+Transform Object::getTransform() const
+{
+    return transform;
+}
+
 glm::mat4 Object::getModelMatrix() const
 {
     glm::mat4 model = glm::mat4(1.0f);

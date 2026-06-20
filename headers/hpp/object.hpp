@@ -23,6 +23,9 @@ public:
 
     Object(Transform &transform, Mesh& mesh);
 
+    void setTransform(Transform &transform);
+    Transform getTransform() const;
+    
     glm::mat4 getModelMatrix() const;
     
 };
