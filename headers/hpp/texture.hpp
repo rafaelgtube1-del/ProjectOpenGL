@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-#include <stbi_image.h>
+#include <stb/stbi_image.h>
 #include <shader.hpp>
 
 class Texture
